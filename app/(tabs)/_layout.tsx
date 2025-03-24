@@ -1,6 +1,8 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Tabs } from 'expo-router';
+import { BlurView } from 'expo-blur';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { HapticTab } from '@/components/HapticTab';
 import TabBarBackground from '@/components/ui/TabBarBackground';
@@ -20,11 +22,14 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
+        headerShadowVisible: false,
         tabBarButton: HapticTab,
         tabBarShowLabel: false,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
-          ios: { position: 'absolute' },
+          ios: {
+            position: 'absolute',
+          },
           default: {},
         }),
       }}
@@ -45,6 +50,7 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="orders"
         options={{
@@ -61,6 +67,7 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="cart"
         options={{

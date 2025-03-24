@@ -15,13 +15,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 import { useEffect, useRef, useState } from 'react';
 
-interface Order {
-  id: string;
-  restaurant: string;
-  status: 'ongoing' | 'done';
-  total: number;
-  date: string;
-}
+import { Order, ORDERS } from '@/constants/Orders';
 
 // Get screen dimensions for modal sizing
 const { height: screenHeight } = Dimensions.get('window');
@@ -133,7 +127,7 @@ const OrderDetailModal: React.FC<{
             <TouchableOpacity
               style={[styles.actionButton, { backgroundColor: theme.tint }]}
             >
-              <Text style={styles.actionButtonText}>
+              <Text style={[styles.actionButtonText]}>
                 {order.status === 'ongoing' ? 'Track Order' : 'Reorder'}
               </Text>
             </TouchableOpacity>
@@ -193,55 +187,9 @@ export default function Orders() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  // Static array of orders with TypeScript typing
-  const orders: Order[] = [
-    {
-      id: '1',
-      restaurant: 'Pizza Palace',
-      status: 'ongoing',
-      total: 24.99,
-      date: '2025-03-23',
-    },
-    {
-      id: '2',
-      restaurant: 'Sushi Stop',
-      status: 'done',
-      total: 35.5,
-      date: '2025-03-20',
-    },
-    {
-      id: '3',
-      restaurant: 'Burger Barn',
-      status: 'ongoing',
-      total: 15.75,
-      date: '2025-03-23',
-    },
-    {
-      id: '4',
-      restaurant: 'Taco Town',
-      status: 'done',
-      total: 12.0,
-      date: '2025-03-19',
-    },
-    {
-      id: '5',
-      restaurant: 'Taco Bell',
-      status: 'done',
-      total: 12.0,
-      date: '2025-03-19',
-    },
-    {
-      id: '6',
-      restaurant: 'Grill Hav',
-      status: 'done',
-      total: 12.0,
-      date: '2025-03-19',
-    },
-  ];
-
   // Categorize orders
-  const ongoingOrders = orders.filter((order) => order.status === 'ongoing');
-  const doneOrders = orders.filter((order) => order.status === 'done');
+  const ongoingOrders = ORDERS.filter((order) => order.status === 'ongoing');
+  const doneOrders = ORDERS.filter((order) => order.status === 'done');
 
   // Handle order card press
   const handleOrderPress = (order: Order) => {
@@ -301,7 +249,7 @@ export default function Orders() {
         )}
 
         {/* Empty State */}
-        {orders.length === 0 && (
+        {ORDERS.length === 0 && (
           <Text style={[styles.emptyText, { color: theme.tabIconDefault }]}>
             No orders yet.
           </Text>
@@ -448,7 +396,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   actionButtonText: {
-    color: '#fff',
     fontWeight: '600',
     fontSize: 16,
   },
